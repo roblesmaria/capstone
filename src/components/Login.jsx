@@ -4,10 +4,10 @@ import { AppContext } from "../AppContext";
 import { useFormik } from "formik";
 
 export default function Home() {
-  const [name, setName] = useState("");
-
   // getting states from app context
   const {
+    firstName,
+    setFirstName,
     userEmail,
     setUserEmail,
     loggedIn,
@@ -29,7 +29,7 @@ export default function Home() {
 
     if (foundUser) {
       //find user name and their current list of events
-      setName(foundUser.firstName);
+      setFirstName(foundUser.firstName);
       setEvents(foundUser.events);
       setLoggedIn(true);
     } else {
@@ -81,7 +81,7 @@ export default function Home() {
       <NavBar />
       {loggedIn ? (
         <>
-          <h1>Welcome {name}</h1>
+          <h1>Welcome {firstName}</h1>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (

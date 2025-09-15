@@ -21,6 +21,11 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
+            <Link to="/addevent" className="nav_link">
+              Add Event
+            </Link>
+          </li>
+          <li>
             <Link to="/help" className="nav_link">
               Help
             </Link>

@@ -3,6 +3,7 @@ import React, { createContext, useState } from "react";
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
+  const [firstName, setFirstName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [password, setPassword] = useState("");
@@ -14,6 +15,8 @@ export const AppContextProvider = ({ children }) => {
   });
 
   const contextValue = {
+    firstName,
+    setFirstName,
     userEmail,
     setUserEmail,
     loggedIn,

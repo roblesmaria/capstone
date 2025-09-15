@@ -11,6 +11,7 @@ import { AppContextProvider } from "./AppContext.jsx";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import AddEvent from "./components/AddEvent.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/addevent",
+    element: <AddEvent />,
   },
 ]);
 
