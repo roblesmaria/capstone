@@ -10,6 +10,7 @@ import { AppContextProvider } from "./AppContext.jsx";
 // Import components
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
