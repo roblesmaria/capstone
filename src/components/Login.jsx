@@ -4,31 +4,41 @@ import { AppContext } from "../AppContext";
 import { useFormik } from "formik";
 
 export default function Home() {
-  // importing states from app context
+  const [name, setName] = useState("");
+
+  // getting states from app context
   const {
     userEmail,
     setUserEmail,
     loggedIn,
     setLoggedIn,
-    inputValue,
-    setInputValue,
+    password,
+    setPassword,
+    users,
+    setUsers,
   } = useContext(AppContext);
 
   // get login input
   const handleLogin = () => {
-    if (inputValue.trim() !== "") {
-      setUserName(inputValue.trim());
+    //check if there is user with email and password in session storage\
+    let foundUser = users.find(
+      (user) => user.email == userEmail && user.password == password
+    );
+
+    if (foundUser) {
+      setName(foundUser.firstName);
       setLoggedIn(true);
     } else {
-      alert("Please enter your name to log in.");
+      alert("User not found. Please Register.");
     }
   };
 
   // set logout info
   const handleLogout = () => {
     setLoggedIn(false);
-    setUserName("");
-    setInputValue("");
+    setName("");
+    setUserEmail("");
+    setPassword("");
   };
 
   const formik = useFormik({
@@ -54,7 +64,8 @@ export default function Home() {
     },
     onSubmit: (values) => {
       //set username to welcome
-      setInputValue(values.email.toString());
+      setUserEmail(values.email.toString());
+      setPassword(values.password.toString());
       handleLogin();
     },
   });
@@ -66,7 +77,7 @@ export default function Home() {
       <NavBar />
       {loggedIn ? (
         <>
-          <h1>Welcome {userName}</h1>
+          <h1>Welcome {name}</h1>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (
