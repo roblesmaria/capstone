@@ -7,22 +7,22 @@ export default function NavBar() {
         <ul className="nav-links">
           <li>
             <Link to="/login" className="nav_link">
-              Home
+              Login
             </Link>
           </li>
           <li>
             <Link to="/register" className="nav_link">
-              Products
+              Register
             </Link>
           </li>
           <li>
             <Link to="/dashboard" className="nav_link">
-              Contacts
+              Dashboard
             </Link>
           </li>
           <li>
             <Link to="/help" className="nav_link">
-              Contacts
+              Help
             </Link>
           </li>
         </ul>
