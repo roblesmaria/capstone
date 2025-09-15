@@ -6,6 +6,7 @@ export const AppContextProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [password, setPassword] = useState("");
+  const [events, setEvents] = useState([]);
   const [users, setUsers] = useState(() => {
     // Initialize state from localStorage or default
     const users = localStorage.getItem("users");
@@ -19,6 +20,8 @@ export const AppContextProvider = ({ children }) => {
     setLoggedIn,
     password,
     setPassword,
+    events,
+    setEvents,
     users,
     setUsers,
   };

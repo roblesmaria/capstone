@@ -14,6 +14,8 @@ export default function Home() {
     setLoggedIn,
     password,
     setPassword,
+    events,
+    setEvents,
     users,
     setUsers,
   } = useContext(AppContext);
@@ -26,7 +28,9 @@ export default function Home() {
     );
 
     if (foundUser) {
+      //find user name and their current list of events
       setName(foundUser.firstName);
+      setEvents(foundUser.events);
       setLoggedIn(true);
     } else {
       alert("User not found. Please Register.");
