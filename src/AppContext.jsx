@@ -6,6 +6,11 @@ export const AppContextProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [password, setPassword] = useState("");
+  const [users, setUsers] = useState(() => {
+    // Initialize state from localStorage or default
+    const users = localStorage.getItem("users");
+    return users ? JSON.parse(users) : [];
+  });
 
   const contextValue = {
     userEmail,
@@ -14,6 +19,8 @@ export const AppContextProvider = ({ children }) => {
     setLoggedIn,
     password,
     setPassword,
+    users,
+    setUsers,
   };
 
   return (
