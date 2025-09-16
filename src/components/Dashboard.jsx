@@ -24,8 +24,26 @@ export default function Dashboard() {
     setUsers,
   } = useContext(AppContext);
 
-  console.log("logged in is ", loggedIn);
-  console.log("events raw ", events.data);
+  // get current list of events and store to user (for after add)
+  //get user and update events
+  let currentUser = users.find(
+    (user) => user.email == userEmail && user.password == password
+  );
+  currentUser.events = events;
+
+  //find index of object to replace
+  let userList = users;
+  let indexToReplace = userList.findIndex(
+    (user) => user.email == userEmail && user.password == password
+  );
+
+  if (indexToReplace !== -1) {
+    userList[indexToReplace] = currentUser;
+  }
+
+  localStorage.setItem("users", JSON.stringify(userList));
+
+  console.log("users after updating local storage ", users);
 
   return (
     <div>

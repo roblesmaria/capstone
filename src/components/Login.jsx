@@ -40,7 +40,6 @@ export default function Home() {
   // set logout info
   const handleLogout = () => {
     setLoggedIn(false);
-    setName("");
     setUserEmail("");
     setPassword("");
   };

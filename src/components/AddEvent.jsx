@@ -70,8 +70,6 @@ const AddEvent = () => {
       // add to events and rewrite events
       setEvents((events) => [...events, event]);
 
-      console.log("current events after add ", events);
-
       alert("Event Created!");
     },
   });
