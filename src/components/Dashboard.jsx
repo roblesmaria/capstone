@@ -50,8 +50,6 @@ export default function Dashboard() {
     }
 
     localStorage.setItem("users", JSON.stringify(userList));
-
-    console.log("users after updating local storage ", users);
   }
 
   //get current user
@@ -88,14 +86,6 @@ export default function Dashboard() {
   const handleSaveEvent = (event) => {
     //get current user
     setIsEditing(false);
-    console.log("previous event name", event.name);
-
-    console.log("input values in state");
-    console.log(nameInputValue);
-    console.log(dateInputValue);
-    console.log(timeInputValue);
-    console.log(descriptionInputValue);
-    console.log(locationInputValue);
 
     // create new event object to hold any changes
     let editedEvent = {
@@ -144,7 +134,6 @@ export default function Dashboard() {
     let indexToReplace = eventsList.findIndex(
       (fEvent) => fEvent.name == event.name
     );
-    console.log("edited event ", editedEvent);
 
     if (indexToReplace !== -1) {
       eventsList[indexToReplace] = editedEvent;
@@ -168,8 +157,6 @@ export default function Dashboard() {
     }
 
     localStorage.setItem("users", JSON.stringify(userList));
-
-    console.log("updated users after edit save");
   };
 
   return (
@@ -187,97 +174,101 @@ export default function Dashboard() {
               No current events for <b>{firstName}</b>.
             </p>
           ) : (
-            <div>
-              {events.map((event) => (
-                <div>
+            <div id="card">
+              {events
+                .sort((a, b) => a.date - b.date)
+                .map((event) => (
                   <div>
-                    <label htmlFor="eventName">Name:</label>
-                    <input
-                      type="text"
-                      id="eventName"
-                      name="eventName"
-                      defaultValue={event.name}
-                      disabled={!isEditing}
-                      onChange={(e) => setNameInputValue(e.target.value)}
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="eventName">Name:</label>
+                      <input
+                        type="text"
+                        id="eventName"
+                        name="eventName"
+                        defaultValue={event.name}
+                        disabled={!isEditing}
+                        onChange={(e) => setNameInputValue(e.target.value)}
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="eventDate">Date:</label>
-                    <input
-                      type="date"
-                      id="eventDate"
-                      name="eventDate"
-                      defaultValue={event.date}
-                      disabled={!isEditing}
-                      onChange={(e) => setDateInputValue(e.target.value)}
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="eventDate">Date:</label>
+                      <input
+                        type="date"
+                        id="eventDate"
+                        name="eventDate"
+                        defaultValue={event.date}
+                        disabled={!isEditing}
+                        onChange={(e) => setDateInputValue(e.target.value)}
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="eventTime">Time:</label>
-                    <input
-                      type="time"
-                      id="eventTime"
-                      name="eventTime"
-                      defaultValue={event.time}
-                      disabled={!isEditing}
-                      onChange={(e) => setTimeInputValue(e.target.value)}
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="eventTime">Time:</label>
+                      <input
+                        type="time"
+                        id="eventTime"
+                        name="eventTime"
+                        defaultValue={event.time}
+                        disabled={!isEditing}
+                        onChange={(e) => setTimeInputValue(e.target.value)}
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="eventDescription">Description:</label>
-                    <textarea
-                      id="eventDescription"
-                      name="eventDescription"
-                      rows="1"
-                      defaultValue={event.description}
-                      disabled={!isEditing}
-                      onChange={(e) => setDescriptionInputValue(e.target.value)}
-                    ></textarea>
-                  </div>
+                    <div>
+                      <label htmlFor="eventDescription">Description:</label>
+                      <textarea
+                        id="eventDescription"
+                        name="eventDescription"
+                        rows="1"
+                        defaultValue={event.description}
+                        disabled={!isEditing}
+                        onChange={(e) =>
+                          setDescriptionInputValue(e.target.value)
+                        }
+                      ></textarea>
+                    </div>
 
-                  <div>
-                    <label htmlFor="eventLocation">Location:</label>
-                    <input
-                      type="text"
-                      id="eventLocation"
-                      name="eventLocation"
-                      defaultValue={event.location}
-                      disabled={!isEditing}
-                      onChange={(e) => setLocationInputValue(e.target.value)}
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="eventLocation">Location:</label>
+                      <input
+                        type="text"
+                        id="eventLocation"
+                        name="eventLocation"
+                        defaultValue={event.location}
+                        disabled={!isEditing}
+                        onChange={(e) => setLocationInputValue(e.target.value)}
+                      />
+                    </div>
 
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => handleEditEvent(event)}
-                    >
-                      Edit
-                    </button>
-
-                    {isEditing && (
+                    <div>
                       <button
                         type="button"
-                        onClick={() => handleSaveEvent(event)}
+                        onClick={() => handleEditEvent(event)}
                       >
-                        Save
+                        Edit
                       </button>
-                    )}
 
-                    {!isEditing && (
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteEvent(event.name)}
-                      >
-                        Delete
-                      </button>
-                    )}
+                      {isEditing && (
+                        <button
+                          type="button"
+                          onClick={() => handleSaveEvent(event)}
+                        >
+                          Save
+                        </button>
+                      )}
+
+                      {!isEditing && (
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteEvent(event.name)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           )}
         </div>

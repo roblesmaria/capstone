@@ -55,9 +55,6 @@ const AddEvent = () => {
       return errors;
     },
     onSubmit: (values) => {
-      // Handle form submission, e.g., send data to an API
-      console.log("Event submitted:", values);
-
       //create event object to store in events
       const event = {
         name: values.eventName,
