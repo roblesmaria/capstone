@@ -75,7 +75,7 @@ const AddEvent = () => {
     <div>
       <NavBar />
       {loggedIn == false ? (
-        <h2>Login to see dashboard.</h2>
+        <h2>Login to add event.</h2>
       ) : (
         // Component B to show when the array is not empty
         <form onSubmit={formik.handleSubmit}>
