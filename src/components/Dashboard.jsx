@@ -174,11 +174,11 @@ export default function Dashboard() {
               No current events for <b>{firstName}</b>.
             </p>
           ) : (
-            <div id="card">
+            <div>
               {events
                 .sort((a, b) => a.date - b.date)
                 .map((event) => (
-                  <div>
+                  <div id="card">
                     <div>
                       <label htmlFor="eventName">Name:</label>
                       <input

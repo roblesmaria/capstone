@@ -68,3 +68,9 @@ ul li a {
 ul li a:hover {
   background-color: #111111;
 }
+
+#card {
+  border: 1px solid white;
+  padding: 5rem;
+  margin: 1rem;
+}
