@@ -12,6 +12,7 @@ import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import AddEvent from "./components/AddEvent.jsx";
+import Help from "./components/Help.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/addevent",
     element: <AddEvent />,
+  },
+  {
+    path: "/help",
+    element: <Help />,
   },
 ]);
 
