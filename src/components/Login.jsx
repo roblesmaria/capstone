@@ -21,10 +21,10 @@ export default function Home() {
   } = useContext(AppContext);
 
   // get login input
-  const handleLogin = () => {
-    //check if there is user with email and password in session storage\
+  const handleLogin = (email, password) => {
+    //check if there is user with email and password in session storage
     let foundUser = users.find(
-      (user) => user.email == userEmail && user.password == password
+      (user) => user.email == email && user.password == password
     );
 
     if (foundUser) {
@@ -69,7 +69,7 @@ export default function Home() {
       //set username to welcome
       setUserEmail(values.email.toString());
       setPassword(values.password.toString());
-      handleLogin();
+      handleLogin(values.email.toString(), values.password.toString());
     },
   });
 

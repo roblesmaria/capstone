@@ -8,6 +8,13 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 //import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Dashboard() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [nameInputValue, setNameInputValue] = useState("");
+  const [dateInputValue, setDateInputValue] = useState("");
+  const [timeInputValue, setTimeInputValue] = useState("");
+  const [descriptionInputValue, setDescriptionInputValue] = useState("");
+  const [locationInputValue, setLocationInputValue] = useState("");
+
   // getting states from app context
   const {
     firstName,
@@ -47,15 +54,12 @@ export default function Dashboard() {
     console.log("users after updating local storage ", users);
   }
 
+  //get current user
+  let currentUser = users.find(
+    (user) => user.email == userEmail && user.password == password
+  );
+
   const handleDeleteEvent = (eventName) => {
-    console.log(`Button delete was clicked.`);
-    console.log(eventName);
-
-    //get current user
-    let currentUser = users.find(
-      (user) => user.email == userEmail && user.password == password
-    );
-
     let userEvents = currentUser.events;
 
     //take out event with name
@@ -74,6 +78,98 @@ export default function Dashboard() {
     localStorage.setItem("users", JSON.stringify(userList));
 
     setEvents(currentUser.events);
+  };
+
+  const handleEditEvent = (event) => {
+    //get current user
+    setIsEditing(true);
+  };
+
+  const handleSaveEvent = (event) => {
+    //get current user
+    setIsEditing(false);
+    console.log("previous event name", event.name);
+
+    console.log("input values in state");
+    console.log(nameInputValue);
+    console.log(dateInputValue);
+    console.log(timeInputValue);
+    console.log(descriptionInputValue);
+    console.log(locationInputValue);
+
+    // create new event object to hold any changes
+    let editedEvent = {
+      name: "",
+      date: "",
+      time: "",
+      description: "",
+      location: "",
+    };
+
+    // if state variable is initialize item was changed
+    if (nameInputValue === "") {
+      editedEvent.name = event.name;
+    } else {
+      editedEvent.name = nameInputValue;
+    }
+
+    if (dateInputValue === "") {
+      editedEvent.date = event.date;
+    } else {
+      editedEvent.date = dateInputValue;
+    }
+
+    if (timeInputValue === "") {
+      editedEvent.time = event.time;
+    } else {
+      editedEvent.time = timeInputValue;
+    }
+
+    if (descriptionInputValue === "") {
+      editedEvent.description = event.description;
+    } else {
+      editedEvent.description = descriptionInputValue;
+    }
+
+    if (locationInputValue === "") {
+      editedEvent.location = event.location;
+    } else {
+      editedEvent.location = locationInputValue;
+    }
+
+    // update events to display on page
+    let eventsList = events;
+
+    //find specific event
+    let indexToReplace = eventsList.findIndex(
+      (fEvent) => fEvent.name == event.name
+    );
+    console.log("edited event ", editedEvent);
+
+    if (indexToReplace !== -1) {
+      eventsList[indexToReplace] = editedEvent;
+    }
+
+    setEvents(eventsList);
+
+    //update local storage
+    currentUser.events = eventsList;
+
+    //find user in local storage to update
+    //rewrite events in local storage
+    //find index of object to replace
+    let userList = users;
+    let userToReplace = userList.findIndex(
+      (user) => user.email == userEmail && user.password == password
+    );
+
+    if (userToReplace !== -1) {
+      userList[indexToReplace] = currentUser;
+    }
+
+    localStorage.setItem("users", JSON.stringify(userList));
+
+    console.log("updated users after edit save");
   };
 
   return (
@@ -100,7 +196,9 @@ export default function Dashboard() {
                       type="text"
                       id="eventName"
                       name="eventName"
-                      value={event.name}
+                      defaultValue={event.name}
+                      disabled={!isEditing}
+                      onChange={(e) => setNameInputValue(e.target.value)}
                     />
                   </div>
 
@@ -110,7 +208,9 @@ export default function Dashboard() {
                       type="date"
                       id="eventDate"
                       name="eventDate"
-                      value={event.date}
+                      defaultValue={event.date}
+                      disabled={!isEditing}
+                      onChange={(e) => setDateInputValue(e.target.value)}
                     />
                   </div>
 
@@ -120,7 +220,9 @@ export default function Dashboard() {
                       type="time"
                       id="eventTime"
                       name="eventTime"
-                      value={event.time}
+                      defaultValue={event.time}
+                      disabled={!isEditing}
+                      onChange={(e) => setTimeInputValue(e.target.value)}
                     />
                   </div>
 
@@ -130,7 +232,9 @@ export default function Dashboard() {
                       id="eventDescription"
                       name="eventDescription"
                       rows="1"
-                      value={event.description}
+                      defaultValue={event.description}
+                      disabled={!isEditing}
+                      onChange={(e) => setDescriptionInputValue(e.target.value)}
                     ></textarea>
                   </div>
 
@@ -140,18 +244,37 @@ export default function Dashboard() {
                       type="text"
                       id="eventLocation"
                       name="eventLocation"
-                      value={event.location}
+                      defaultValue={event.location}
+                      disabled={!isEditing}
+                      onChange={(e) => setLocationInputValue(e.target.value)}
                     />
                   </div>
 
                   <div>
-                    <button type="button">Edit</button>
                     <button
                       type="button"
-                      onClick={() => handleDeleteEvent(event.name)}
+                      onClick={() => handleEditEvent(event)}
                     >
-                      Delete
+                      Edit
                     </button>
+
+                    {isEditing && (
+                      <button
+                        type="button"
+                        onClick={() => handleSaveEvent(event)}
+                      >
+                        Save
+                      </button>
+                    )}
+
+                    {!isEditing && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteEvent(event.name)}
+                      >
+                        Delete
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
